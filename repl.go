@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func startRepl() {
@@ -12,7 +13,16 @@ func startRepl() {
 		fmt.Printf("Pokedex > ")
 		reader.Scan()
 		text := reader.Text()
-		println(text)
+
+		words := strings.Fields(text)
+		commands := getCommands()
+		cmd, ok := commands[words[0]]
+		if !ok {
+			fmt.Printf("unknown command: %s\n", words[0])
+			continue
+		} else {
+			cmd.callback()
+		}
 	}
 }
 
