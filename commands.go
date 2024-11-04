@@ -22,3 +22,17 @@ func commandHelp() error {
 	fmt.Println()
 	return nil
 }
+
+func commandMap() error {
+	locationAreas, err := getLocationArea()
+	if err != nil {
+		return fmt.Errorf("error getting location-areas: %w", err)
+	}
+	fmt.Println("Get next 20 locations")
+	return nil
+}
+
+func commandMapB() error {
+	fmt.Println("Get previous 20 locations")
+	return nil
+}
