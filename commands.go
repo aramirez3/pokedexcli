@@ -5,13 +5,13 @@ import (
 	"os"
 )
 
-func commandExit() error {
+func commandExit(cfg *config) error {
 	fmt.Println("exit command")
 	os.Exit(0)
 	return nil
 }
 
-func commandHelp() error {
+func commandHelp(cfg *config) error {
 	commands := getCommands()
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
@@ -20,19 +20,5 @@ func commandHelp() error {
 		fmt.Printf("%s: %s\n", cmd.name, cmd.description)
 	}
 	fmt.Println()
-	return nil
-}
-
-func commandMap() error {
-	locationAreas, err := getLocationArea()
-	if err != nil {
-		return fmt.Errorf("error getting location-areas: %w", err)
-	}
-	fmt.Println("Get next 20 locations")
-	return nil
-}
-
-func commandMapB() error {
-	fmt.Println("Get previous 20 locations")
 	return nil
 }

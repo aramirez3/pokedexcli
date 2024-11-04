@@ -7,21 +7,21 @@ import (
 	"strings"
 )
 
-func startRepl() {
+func startRepl(cfg *config) {
 	reader := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Printf("Pokedex > ")
 		reader.Scan()
 		text := reader.Text()
-
 		words := strings.Fields(text)
+
 		commands := getCommands()
 		cmd, ok := commands[words[0]]
 		if !ok {
 			fmt.Printf("unknown command: %s\n", words[0])
 			continue
 		} else {
-			cmd.callback()
+			cmd.callback(cfg)
 		}
 	}
 }
@@ -29,12 +29,12 @@ func startRepl() {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*config) error
 }
 
 type config struct {
-	Next     *string
-	Previous *string
+	next     *string
+	previous *string
 }
 
 func getCommands() map[string]cliCommand {
@@ -49,10 +49,10 @@ func getCommands() map[string]cliCommand {
 			description: "Exit the Pokedex",
 			callback:    commandExit,
 		},
-		"map": {
-			name:        "map",
+		"mapf": {
+			name:        "mapf",
 			description: "Display the names of the next 20 locations in the Pokemon world",
-			callback:    commandMap,
+			callback:    commandMapF,
 		},
 		"mapb": {
 			name:        "mapb",
