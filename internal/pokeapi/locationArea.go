@@ -7,7 +7,15 @@ import (
 	"net/http"
 )
 
-type LocationsResponse struct{}
+type LocationsResponse struct {
+	count    int64
+	next     *string
+	previous *string
+	results  []struct {
+		name string
+		url  string
+	}
+}
 
 func (c *Client) GetLocations(param string) (LocationsResponse, error) {
 	locationsResponse := LocationsResponse{}
