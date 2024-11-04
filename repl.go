@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/aramirez3/pokedexcli/internal/pokeapi"
 )
 
 func startRepl(cfg *config) {
@@ -33,8 +35,9 @@ type cliCommand struct {
 }
 
 type config struct {
-	next     *string
-	previous *string
+	pokeapiClient pokeapi.Client
+	next          *string
+	previous      *string
 }
 
 func getCommands() map[string]cliCommand {

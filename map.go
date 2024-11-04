@@ -1,10 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func commandMapF(cfg *config) error {
-	url := cfg.next
-	locationAreas, err := getLocations(url)
+	locationAreas, err := cfg.pokeapiClient.GetLocations(*cfg.next)
 	if err != nil {
 		return fmt.Errorf("error getting location-areas: %w", err)
 	}

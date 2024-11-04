@@ -1,6 +1,15 @@
 package main
 
+import (
+	"time"
+
+	"github.com/aramirez3/pokedexcli/internal/pokeapi"
+)
+
 func main() {
-	cfg := &config{}
+	client := pokeapi.NewClient(5 * time.Second)
+	cfg := &config{
+		pokeapiClient: client,
+	}
 	startRepl(cfg)
 }
