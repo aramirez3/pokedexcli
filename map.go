@@ -5,12 +5,15 @@ import (
 )
 
 func commandMapF(cfg *config) error {
-	locationAreas, err := cfg.pokeapiClient.GetLocations(*cfg.next)
+	locationAreas, err := cfg.pokeapiClient.GetLocations(cfg.Next)
 	if err != nil {
-		return fmt.Errorf("error getting location-areas: %w", err)
+		return fmt.Errorf("error getting location-areas: %w\n", err)
 	}
-	fmt.Println("Get next 20 locations")
-	fmt.Println(locationAreas)
+	cfg.Next = locationAreas.Next
+	cfg.Previous = locationAreas.Previous
+	for _, loc := range locationAreas.Results {
+		fmt.Println(loc.Name)
+	}
 	return nil
 }
 

@@ -5,27 +5,28 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 )
 
 type LocationsResponse struct {
-	count    int64
-	next     *string
-	previous *string
-	results  []struct {
-		name string
-		url  string
+	Count    int64
+	Next     *string
+	Previous *string
+	Results  []struct {
+		Name string
+		Url  string
 	}
 }
 
-func (c *Client) GetLocations(param string) (LocationsResponse, error) {
+func (c *Client) GetLocations(param *string) (LocationsResponse, error) {
 	locationsResponse := LocationsResponse{}
-	url := baseUrl
-	if param != "" {
-		url = baseUrl + param
+	reqUrl, _ := url.JoinPath(baseUrl, locationArea)
+	if param != nil {
+		reqUrl = *param
 	}
 
-	fmt.Printf("url: %s", url)
-	req, err := http.NewRequest("GET", url, nil)
+	fmt.Printf("\n\nGet url (location-area): %s\n", reqUrl)
+	req, err := http.NewRequest("GET", reqUrl, nil)
 	if err != nil {
 		return locationsResponse, fmt.Errorf("error making request: %w", err)
 	}
@@ -36,6 +37,7 @@ func (c *Client) GetLocations(param string) (LocationsResponse, error) {
 	}
 	defer res.Body.Close()
 
+	fmt.Printf("Response status: %s\n\n", res.Status)
 	data, err := io.ReadAll(res.Body)
 	if err != nil {
 		return locationsResponse, fmt.Errorf("error encoding data: %w", err)

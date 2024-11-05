@@ -36,8 +36,8 @@ type cliCommand struct {
 
 type config struct {
 	pokeapiClient pokeapi.Client
-	next          *string
-	previous      *string
+	Next          *string
+	Previous      *string
 }
 
 func getCommands() map[string]cliCommand {
