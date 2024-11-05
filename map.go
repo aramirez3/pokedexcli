@@ -7,7 +7,7 @@ import (
 func commandMapF(cfg *config) error {
 	locationAreas, err := cfg.pokeapiClient.GetLocations(cfg.Next)
 	if err != nil {
-		return fmt.Errorf("error getting location-areas: %w\n", err)
+		return fmt.Errorf("error getting location-areas: %w", err)
 	}
 	cfg.Next = locationAreas.Next
 	cfg.Previous = locationAreas.Previous
@@ -18,6 +18,14 @@ func commandMapF(cfg *config) error {
 }
 
 func commandMapB(cfg *config) error {
-	fmt.Println("Get previous 20 locations")
+	locationAreas, err := cfg.pokeapiClient.GetLocations(cfg.Previous)
+	if err != nil {
+		return fmt.Errorf("error getting location-areas: %w", err)
+	}
+	cfg.Next = locationAreas.Next
+	cfg.Previous = locationAreas.Previous
+	for _, loc := range locationAreas.Results {
+		fmt.Println(loc.Name)
+	}
 	return nil
 }
