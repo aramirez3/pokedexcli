@@ -25,7 +25,6 @@ func (c *Client) GetLocations(param *string) (LocationsResponse, error) {
 		reqUrl = *param
 	}
 
-	fmt.Printf("\n\nGet url (location-area): %s\n", reqUrl)
 	req, err := http.NewRequest("GET", reqUrl, nil)
 	if err != nil {
 		return locationsResponse, fmt.Errorf("error making request: %w", err)
@@ -37,7 +36,6 @@ func (c *Client) GetLocations(param *string) (LocationsResponse, error) {
 	}
 	defer res.Body.Close()
 
-	fmt.Printf("Response status: %s\n\n", res.Status)
 	data, err := io.ReadAll(res.Body)
 	if err != nil {
 		return locationsResponse, fmt.Errorf("error encoding data: %w", err)
