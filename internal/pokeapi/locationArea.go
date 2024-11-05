@@ -1,7 +1,6 @@
 package pokeapi
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -12,10 +11,12 @@ type LocationsResponse struct {
 	Count    int64
 	Next     *string
 	Previous *string
-	Results  []struct {
-		Name string
-		Url  string
-	}
+	Results  []LocationArea
+}
+
+type LocationArea struct {
+	Name string
+	Url  string
 }
 
 func (c *Client) GetLocations(param *string) (LocationsResponse, error) {
@@ -41,10 +42,11 @@ func (c *Client) GetLocations(param *string) (LocationsResponse, error) {
 		return locationsResponse, fmt.Errorf("error encoding data: %w", err)
 	}
 
-	err = json.Unmarshal(data, &locationsResponse)
-	if err != nil {
-		return locationsResponse, fmt.Errorf("error unmarshaling data: %w", err)
-	}
+	UnmarshalData(data, &locationsResponse)
+	// err = json.Unmarshal(data, &locationsResponse)
+	// if err != nil {
+	// 	return locationsResponse, fmt.Errorf("error unmarshaling data: %w", err)
+	// }
 
 	return locationsResponse, nil
 }

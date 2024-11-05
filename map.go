@@ -2,16 +2,25 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/aramirez3/pokedexcli/internal/pokeapi"
 )
 
 func commandMapF(cfg *config) error {
-	locationAreas, err := cfg.pokeapiClient.GetLocations(cfg.Next)
-	if err != nil {
-		return fmt.Errorf("error getting location-areas: %w", err)
+	locationAreas := []pokeapi.LocationArea{}
+	cached, found := cfg.Cache.Get(*cfg.Next)
+	if found {
+		pokeapi.UnmarshalData(cached, &locationAreas)
+	} else {
+		locationAreasResponse, err := cfg.pokeapiClient.GetLocations(cfg.Next)
+		if err != nil {
+			return fmt.Errorf("error getting location-areas: %w", err)
+		}
+		cfg.Next = locationAreasResponse.Next
+		cfg.Previous = locationAreasResponse.Previous
+		locationAreas = locationAreasResponse.Results
 	}
-	cfg.Next = locationAreas.Next
-	cfg.Previous = locationAreas.Previous
-	for _, loc := range locationAreas.Results {
+	for _, loc := range locationAreas {
 		fmt.Println(loc.Name)
 	}
 	return nil

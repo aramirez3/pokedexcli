@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/aramirez3/pokedexcli/internal/pokeapi"
+	"github.com/aramirez3/pokedexcli/internal/pokecache"
 )
 
 func startRepl(cfg *config) {
@@ -36,6 +37,7 @@ type cliCommand struct {
 
 type config struct {
 	pokeapiClient pokeapi.Client
+	Cache         *pokecache.Cache
 	Next          *string
 	Previous      *string
 }

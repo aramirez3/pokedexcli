@@ -4,12 +4,15 @@ import (
 	"time"
 
 	"github.com/aramirez3/pokedexcli/internal/pokeapi"
+	"github.com/aramirez3/pokedexcli/internal/pokecache"
 )
 
 func main() {
 	client := pokeapi.NewClient(5 * time.Second)
+	cache := pokecache.NewCache(5 * time.Second)
 	cfg := &config{
 		pokeapiClient: client,
+		Cache:         cache,
 	}
 	startRepl(cfg)
 }
