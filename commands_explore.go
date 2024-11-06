@@ -21,8 +21,17 @@ func commandExplore(cfg *config) error {
 		printLocationExplored(locationExplored)
 		return nil
 	}
-	locationExplored, _ := cfg.pokeapiClient.ExploreLocation(&areaName)
-	byteData, _ := pokeapi.MarshalData(locationExplored)
+
+	locationExplored, err := cfg.pokeapiClient.ExploreLocation(&areaName)
+	if err != nil {
+		return fmt.Errorf("error exploring area: %w", err)
+	}
+
+	byteData, err := pokeapi.MarshalData(locationExplored)
+	if err != nil {
+		return fmt.Errorf("error marshaling explore data: %w", err)
+	}
+
 	cfg.Cache.Add(areaName, byteData)
 	printLocationExplored(locationExplored)
 	return nil

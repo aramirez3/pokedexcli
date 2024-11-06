@@ -56,6 +56,16 @@ func getCommands() map[string]cliCommand {
 			description: "Exit the Pokedex",
 			callback:    commandExit,
 		},
+		"catch": {
+			name:        "catch",
+			description: "Throw a Pokeball at a Pokemon and attempt to catch them!",
+			callback:    commandCatch,
+		},
+		"explore": {
+			name:        "explore",
+			description: "Displays Pokenmon characters found within a given area",
+			callback:    commandExplore,
+		},
 		"mapf": {
 			name:        "mapf",
 			description: "Display the names of the next 20 locations in the Pokemon world",
@@ -65,11 +75,6 @@ func getCommands() map[string]cliCommand {
 			name:        "mapb",
 			description: "Display the names of the previous 20 locations in the Pokemon world",
 			callback:    commandMapB,
-		},
-		"explore": {
-			name:        "explore",
-			description: "Displays Pokenmon characters found within a given area",
-			callback:    commandExplore,
 		},
 	}
 }
