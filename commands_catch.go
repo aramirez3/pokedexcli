@@ -9,6 +9,9 @@ import (
 
 func commandCatch(cfg *config) error {
 	fmt.Println("Catch command")
+	if len(cfg.Words) == 0 {
+		return fmt.Errorf("no Pokemon name was entered")
+	}
 	name := &cfg.Words[0]
 	pokemon, err := cfg.pokeapiClient.GetPokemon(name)
 	if err != nil {

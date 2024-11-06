@@ -67,6 +67,11 @@ func getCommands() map[string]cliCommand {
 			description: "Displays Pokenmon characters found within a given area",
 			callback:    commandExplore,
 		},
+		"inspect": {
+			name:        "inspect",
+			description: "",
+			callback:    commandInspect,
+		},
 		"mapf": {
 			name:        "mapf",
 			description: "Display the names of the next 20 locations in the Pokemon world",
