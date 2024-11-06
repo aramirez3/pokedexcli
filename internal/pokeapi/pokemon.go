@@ -6,11 +6,11 @@ import (
 )
 
 type Pokemon struct {
-	name           string `json:"name"`
-	baseExperience int64  `json:"base_experience"`
+	Name           string `json:"name"`
+	BaseExperience int64  `json:"base_experience"`
 }
 
-func (c *Client) getPokemon(name *string) (Pokemon, error) {
+func (c *Client) GetPokemon(name *string) (Pokemon, error) {
 	pokemonResponse := Pokemon{}
 	reqUrl, err := url.JoinPath(BaseUrl, PokemonEndpoint)
 
@@ -29,4 +29,18 @@ func (c *Client) getPokemon(name *string) (Pokemon, error) {
 	}
 	UnmarshalData(data, &pokemonResponse)
 	return pokemonResponse, nil
+}
+
+func (c *Client) CatchPokemon(name *string) (Pokemon, error) {
+	pokemon, err := c.GetPokemon(name)
+	if err != nil {
+		return pokemon, fmt.Errorf("error catching pokemon: %w", err)
+	}
+	printPokemonCaught(pokemon)
+	return pokemon, nil
+}
+
+func printPokemonCaught(pokemon Pokemon) {
+	fmt.Println("pokemon was caught!")
+	fmt.Println(pokemon)
 }
