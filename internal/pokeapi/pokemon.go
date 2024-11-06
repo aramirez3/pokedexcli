@@ -6,8 +6,20 @@ import (
 )
 
 type Pokemon struct {
-	Name           string `json:"name"`
-	BaseExperience int64  `json:"base_experience"`
+	Name           string  `json:"name"`
+	BaseExperience int64   `json:"base_experience"`
+	Stats          []Stats `json:"stats"`
+	Height         int64   `json:"height"`
+	Weight         int64   `json:"weight"`
+}
+
+type Stats struct {
+	BaseStat int        `json:"base_stat"`
+	Stat     StatDetail `json:"stat"`
+}
+
+type StatDetail struct {
+	Name string `json:"name"`
 }
 
 func (c *Client) GetPokemon(name *string) (Pokemon, error) {

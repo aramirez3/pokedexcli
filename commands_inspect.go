@@ -16,9 +16,23 @@ func commandInspect(cfg *config) error {
 	pokemon := pokeapi.Pokemon{}
 	pokeapi.UnmarshalData(byteData, &pokemon)
 	if found {
-		fmt.Printf("  Name: %s\n", pokemon.Name)
+		printPokemonStats(pokemon)
 	} else {
 		fmt.Println("You have not caught that Pokemon")
 	}
 	return nil
+}
+
+func printPokemonStats(p pokeapi.Pokemon) {
+	fmt.Println(p)
+	fmt.Printf("Name: %s\n", p.Name)
+	fmt.Printf("Height: %d\n", p.Height)
+	fmt.Printf("Weight: %d\n", p.Weight)
+	fmt.Printf("Stats:\n")
+	for _, stat := range p.Stats {
+		fmt.Printf("    - %s: %v\n", stat.Stat.Name, stat.BaseStat)
+	}
+	fmt.Printf("Types:\n")
+	// fmt.Printf("    - normal\n")
+	// fmt.Printf("    - flying\n")
 }
