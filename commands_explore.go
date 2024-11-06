@@ -33,8 +33,6 @@ func commandExplore(cfg *config) error {
 	}
 	cfg.Cache.Add(areaName, byteData)
 
-	addEncountersToCurrentRange(locationExplored, cfg)
-
 	printLocationExplored(locationExplored)
 	return nil
 }
@@ -45,13 +43,4 @@ func printLocationExplored(locationExplored pokeapi.LocationAreaExplored) {
 	for _, encounter := range locationExplored.PokemonEncounters {
 		fmt.Printf(" - %s\n", encounter.Pokemon.Name)
 	}
-}
-
-func addEncountersToCurrentRange(locationExplored pokeapi.LocationAreaExplored, cfg *config) error {
-	byteData, err := pokeapi.MarshalData(locationExplored.PokemonEncounters)
-	if err != nil {
-		return fmt.Errorf("error marshaling encounter data: %w", err)
-	}
-	cfg.Cache.Add("encounters-range", byteData)
-	return nil
 }

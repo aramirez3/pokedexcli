@@ -37,11 +37,12 @@ type cliCommand struct {
 }
 
 type config struct {
-	pokeapiClient pokeapi.Client
-	Cache         *pokecache.Cache
-	Words         []string
-	Next          *string
-	Previous      *string
+	pokeapiClient   pokeapi.Client
+	Cache           *pokecache.Cache
+	BaseCatchChance int64
+	Words           []string
+	Next            *string
+	Previous        *string
 }
 
 func getCommands() map[string]cliCommand {
