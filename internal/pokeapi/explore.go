@@ -6,12 +6,14 @@ import (
 )
 
 type LocationAreaExplored struct {
-	Name              string `json:"name"`
-	PokemonEncounters []struct {
-		Pokemon struct {
-			Name string `json:"name"`
-		} `json:"pokemon"`
-	} `json:"pokemon_encounters"`
+	Name              string              `json:"name"`
+	PokemonEncounters []PokemonEncounters `json:"pokemon_encounters"`
+}
+
+type PokemonEncounters struct {
+	Pokemon struct {
+		Name string `json:"name"`
+	} `json:"pokemon"`
 }
 
 func (c *Client) ExploreLocation(locationArea *string) (LocationAreaExplored, error) {
