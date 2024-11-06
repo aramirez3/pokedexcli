@@ -24,6 +24,7 @@ func startRepl(cfg *config) {
 			fmt.Printf("unknown command: %s\n", words[0])
 			continue
 		} else {
+			cfg.Words = words[1:]
 			cmd.callback(cfg)
 		}
 	}
@@ -38,6 +39,7 @@ type cliCommand struct {
 type config struct {
 	pokeapiClient pokeapi.Client
 	Cache         *pokecache.Cache
+	Words         []string
 	Next          *string
 	Previous      *string
 }
@@ -63,6 +65,11 @@ func getCommands() map[string]cliCommand {
 			name:        "mapb",
 			description: "Display the names of the previous 20 locations in the Pokemon world",
 			callback:    commandMapB,
+		},
+		"explore": {
+			name:        "explore",
+			description: "Displays Pokenmon characters found within a given area",
+			callback:    commandExplore,
 		},
 	}
 }

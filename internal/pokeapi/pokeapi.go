@@ -3,12 +3,34 @@ package pokeapi
 import (
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
 )
 
 const (
-	BaseUrl      = "https://pokeapi.co/api/v2"
-	locationArea = "location-area"
+	BaseUrl  = "https://pokeapi.co/api/v2"
+	Location = "location-area"
 )
+
+func (c *Client) GetUrl(url string) ([]byte, error) {
+	req, err := http.NewRequest("GET", url, nil)
+	response := []byte{}
+	if err != nil {
+		return response, fmt.Errorf("error making request: %w", err)
+	}
+
+	res, err := c.httpClient.Do(req)
+	if err != nil {
+		return response, fmt.Errorf("error sending request: %w", err)
+	}
+	defer res.Body.Close()
+
+	data, err := io.ReadAll(res.Body)
+	if err != nil {
+		return response, fmt.Errorf("error reading data: %w", err)
+	}
+	return data, nil
+}
 
 func UnmarshalData[T any](data []byte, toType T) error {
 	err := json.Unmarshal(data, &toType)

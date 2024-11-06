@@ -21,7 +21,7 @@ func commandMapF(cfg *config) error {
 		pokeapi.UnmarshalData(cached, &locationsResponse)
 		cfg.Next = locationsResponse.Next
 		cfg.Previous = locationsResponse.Previous
-		prinLocationAreas(locationsResponse.Results)
+		printLocationAreas(locationsResponse.Results)
 		return nil
 	}
 
@@ -34,7 +34,7 @@ func commandMapF(cfg *config) error {
 	cfg.Cache.Add(currentUrl, byteData)
 	cfg.Next = locationAreasResponse.Next
 	cfg.Previous = locationAreasResponse.Previous
-	prinLocationAreas(locationAreasResponse.Results)
+	printLocationAreas(locationAreasResponse.Results)
 	return nil
 }
 
@@ -53,7 +53,7 @@ func commandMapB(cfg *config) error {
 		pokeapi.UnmarshalData(cached, &locationsResponse)
 		cfg.Next = locationsResponse.Next
 		cfg.Previous = locationsResponse.Previous
-		prinLocationAreas(locationsResponse.Results)
+		printLocationAreas(locationsResponse.Results)
 		return nil
 	}
 
@@ -66,11 +66,11 @@ func commandMapB(cfg *config) error {
 	cfg.Cache.Add(currentUrl, byteData)
 	cfg.Next = locationAreas.Next
 	cfg.Previous = locationAreas.Previous
-	prinLocationAreas(locationAreas.Results)
+	printLocationAreas(locationAreas.Results)
 	return nil
 }
 
-func prinLocationAreas(locationAreas []pokeapi.LocationArea) {
+func printLocationAreas(locationAreas []pokeapi.LocationArea) {
 	for _, loc := range locationAreas {
 		fmt.Println(loc.Name)
 	}
