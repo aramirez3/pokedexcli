@@ -8,10 +8,11 @@ import (
 )
 
 type LocationsResponse struct {
-	Count    int64
-	Next     *string
-	Previous *string
-	Results  []LocationArea
+	Count      int64
+	CurrentUrl *string
+	Next       *string
+	Previous   *string
+	Results    []LocationArea
 }
 
 type LocationArea struct {
@@ -20,10 +21,12 @@ type LocationArea struct {
 }
 
 func (c *Client) GetLocations(param *string) (LocationsResponse, error) {
-	locationsResponse := LocationsResponse{}
 	reqUrl, _ := url.JoinPath(baseUrl, locationArea)
 	if param != nil {
 		reqUrl = *param
+	}
+	locationsResponse := LocationsResponse{
+		CurrentUrl: &reqUrl,
 	}
 
 	req, err := http.NewRequest("GET", reqUrl, nil)
@@ -43,10 +46,6 @@ func (c *Client) GetLocations(param *string) (LocationsResponse, error) {
 	}
 
 	UnmarshalData(data, &locationsResponse)
-	// err = json.Unmarshal(data, &locationsResponse)
-	// if err != nil {
-	// 	return locationsResponse, fmt.Errorf("error unmarshaling data: %w", err)
-	// }
 
 	return locationsResponse, nil
 }

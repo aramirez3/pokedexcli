@@ -17,3 +17,11 @@ func UnmarshalData[T any](data []byte, toType T) error {
 	}
 	return nil
 }
+
+func MarshalData[T any](fromType T) ([]byte, error) {
+	jsonData, err := json.Marshal(fromType)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling data: %w", err)
+	}
+	return jsonData, nil
+}
