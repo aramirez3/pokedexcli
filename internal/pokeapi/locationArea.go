@@ -1,6 +1,7 @@
 package pokeapi
 
 import (
+	"fmt"
 	"net/url"
 )
 
@@ -17,11 +18,14 @@ type LocationArea struct {
 }
 
 func (c *Client) GetLocations(param *string) (LocationsResponse, error) {
-	reqUrl, _ := url.JoinPath(BaseUrl, Location)
+	locationsResponse := LocationsResponse{}
+	reqUrl, err := url.JoinPath(BaseUrl, LocationEndpoint)
+	if err != nil {
+		return locationsResponse, fmt.Errorf("error getting location: %w", err)
+	}
 	if param != nil {
 		reqUrl = *param
 	}
-	locationsResponse := LocationsResponse{}
 	data, _ := c.GetUrl(reqUrl)
 
 	UnmarshalData(data, &locationsResponse)

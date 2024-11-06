@@ -1,6 +1,7 @@
 package pokeapi
 
 import (
+	"fmt"
 	"net/url"
 )
 
@@ -14,9 +15,12 @@ type LocationAreaExplored struct {
 }
 
 func (c *Client) ExploreLocation(locationArea *string) (LocationAreaExplored, error) {
-	reqUrl, _ := url.JoinPath(BaseUrl, Location, *locationArea)
+	reqUrl, _ := url.JoinPath(BaseUrl, LocationEndpoint, *locationArea)
 	response := LocationAreaExplored{}
-	data, _ := c.GetUrl(reqUrl)
+	data, err := c.GetUrl(reqUrl)
+	if err != nil {
+		return response, fmt.Errorf("error getting location area: %w", err)
+	}
 	UnmarshalData(data, &response)
 	return response, nil
 }

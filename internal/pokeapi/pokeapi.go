@@ -8,8 +8,9 @@ import (
 )
 
 const (
-	BaseUrl  = "https://pokeapi.co/api/v2"
-	Location = "location-area"
+	BaseUrl          = "https://pokeapi.co/api/v2"
+	LocationEndpoint = "location-area"
+	PokemonEndpoint  = "pokemon"
 )
 
 func (c *Client) GetUrl(url string) ([]byte, error) {
