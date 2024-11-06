@@ -6,11 +6,12 @@ import (
 )
 
 type Pokemon struct {
-	Name           string  `json:"name"`
-	BaseExperience int64   `json:"base_experience"`
-	Stats          []Stats `json:"stats"`
-	Height         int64   `json:"height"`
-	Weight         int64   `json:"weight"`
+	Name           string      `json:"name"`
+	BaseExperience int64       `json:"base_experience"`
+	Stats          []Stats     `json:"stats"`
+	Types          []StatTypes `json:"types"`
+	Height         int64       `json:"height"`
+	Weight         int64       `json:"weight"`
 }
 
 type Stats struct {
@@ -19,6 +20,14 @@ type Stats struct {
 }
 
 type StatDetail struct {
+	Name string `json:"name"`
+}
+
+type StatTypes struct {
+	Type TypesDetail `json:"type"`
+}
+
+type TypesDetail struct {
 	Name string `json:"name"`
 }
 

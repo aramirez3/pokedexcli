@@ -24,7 +24,6 @@ func commandInspect(cfg *config) error {
 }
 
 func printPokemonStats(p pokeapi.Pokemon) {
-	fmt.Println(p)
 	fmt.Printf("Name: %s\n", p.Name)
 	fmt.Printf("Height: %d\n", p.Height)
 	fmt.Printf("Weight: %d\n", p.Weight)
@@ -33,6 +32,7 @@ func printPokemonStats(p pokeapi.Pokemon) {
 		fmt.Printf("    - %s: %v\n", stat.Stat.Name, stat.BaseStat)
 	}
 	fmt.Printf("Types:\n")
-	// fmt.Printf("    - normal\n")
-	// fmt.Printf("    - flying\n")
+	for _, stat := range p.Types {
+		fmt.Printf("    - %s\n", stat.Type.Name)
+	}
 }
