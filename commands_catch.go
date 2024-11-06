@@ -17,8 +17,10 @@ func commandCatch(cfg *config) error {
 		return fmt.Errorf("error getting pokemon: %w", err)
 	}
 	success := pokemonIsCaught(cfg, pokemon.BaseExperience)
+	fmt.Printf("Throwing at ball at %s...\n", pokemon.Name)
 	if success {
 		fmt.Printf("%s was caught!\n", pokemon.Name)
+		fmt.Println("You may now inspect it with the inspect command.")
 		addPokemonToCache(cfg, pokemon)
 	} else {
 		fmt.Printf("%s got got away!\n", pokemon.Name)
