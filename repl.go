@@ -38,7 +38,6 @@ type cliCommand struct {
 type config struct {
 	pokeapiClient pokeapi.Client
 	Cache         *pokecache.Cache
-	CurrentUrl    *string
 	Next          *string
 	Previous      *string
 }

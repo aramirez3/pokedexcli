@@ -7,27 +7,31 @@ import (
 )
 
 func commandMapF(cfg *config) error {
-	if cfg.Next != nil {
-		locationsResponse := pokeapi.LocationsResponse{}
-		cached, found := cfg.Cache.Get(*cfg.Next)
-		if found {
-			pokeapi.UnmarshalData(cached, &locationsResponse)
-			cfg.Next = locationsResponse.Next
-			cfg.Previous = locationsResponse.Previous
-			prinLocationAreas(locationsResponse.Results)
-			return nil
-		}
+	var currentUrl string
+	if cfg.Next == nil {
+		currentUrl = pokeapi.BaseUrl
+	} else {
+		currentUrl = *cfg.Next
+
+	}
+
+	locationsResponse := pokeapi.LocationsResponse{}
+	cached, found := cfg.Cache.Get(currentUrl)
+	if found {
+		pokeapi.UnmarshalData(cached, &locationsResponse)
+		cfg.Next = locationsResponse.Next
+		cfg.Previous = locationsResponse.Previous
+		prinLocationAreas(locationsResponse.Results)
+		return nil
 	}
 
 	locationAreasResponse, err := cfg.pokeapiClient.GetLocations(cfg.Next)
-
 	if err != nil {
 		return fmt.Errorf("error getting location-areas: %w", err)
 	}
 
 	byteData, _ := pokeapi.MarshalData(locationAreasResponse)
-	cfg.Cache.Add(*locationAreasResponse.CurrentUrl, byteData)
-
+	cfg.Cache.Add(currentUrl, byteData)
 	cfg.Next = locationAreasResponse.Next
 	cfg.Previous = locationAreasResponse.Previous
 	prinLocationAreas(locationAreasResponse.Results)

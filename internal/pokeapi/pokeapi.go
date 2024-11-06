@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	baseUrl      = "https://pokeapi.co/api/v2"
+	BaseUrl      = "https://pokeapi.co/api/v2"
 	locationArea = "location-area"
 )
 

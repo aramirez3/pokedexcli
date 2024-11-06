@@ -8,11 +8,10 @@ import (
 )
 
 type LocationsResponse struct {
-	Count      int64
-	CurrentUrl *string
-	Next       *string
-	Previous   *string
-	Results    []LocationArea
+	Count    int64
+	Next     *string
+	Previous *string
+	Results  []LocationArea
 }
 
 type LocationArea struct {
@@ -21,13 +20,11 @@ type LocationArea struct {
 }
 
 func (c *Client) GetLocations(param *string) (LocationsResponse, error) {
-	reqUrl, _ := url.JoinPath(baseUrl, locationArea)
+	reqUrl, _ := url.JoinPath(BaseUrl, locationArea)
 	if param != nil {
 		reqUrl = *param
 	}
-	locationsResponse := LocationsResponse{
-		CurrentUrl: &reqUrl,
-	}
+	locationsResponse := LocationsResponse{}
 
 	req, err := http.NewRequest("GET", reqUrl, nil)
 	if err != nil {
