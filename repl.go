@@ -40,6 +40,7 @@ type config struct {
 	pokeapiClient   pokeapi.Client
 	Cache           *pokecache.Cache
 	BaseCatchChance int64
+	Pokedex         []string
 	Words           []string
 	Next            *string
 	Previous        *string
@@ -81,6 +82,11 @@ func getCommands() map[string]cliCommand {
 			name:        "mapb",
 			description: "Display the names of the previous 20 locations in the Pokemon world",
 			callback:    commandMapB,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Displays all the Pokemen you have caught so far",
+			callback:    commandPokedex,
 		},
 	}
 }

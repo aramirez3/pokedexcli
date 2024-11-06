@@ -36,6 +36,7 @@ func pokemonIsCaught(cfg *config, baseExp int64) bool {
 }
 
 func addPokemonToCache(cfg *config, pokemon pokeapi.Pokemon) error {
+	cfg.Pokedex = append(cfg.Pokedex, pokemon.Name)
 	byteData, err := pokeapi.MarshalData(pokemon)
 	if err != nil {
 		return fmt.Errorf("error marshaling pokemon data: %w", err)

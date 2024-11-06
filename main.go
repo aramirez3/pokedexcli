@@ -14,6 +14,7 @@ func main() {
 		pokeapiClient:   client,
 		Cache:           cache,
 		BaseCatchChance: 60,
+		Pokedex:         []string{},
 	}
 	startRepl(cfg)
 }
