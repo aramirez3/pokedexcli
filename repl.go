@@ -70,7 +70,7 @@ func getCommands() map[string]cliCommand {
 		},
 		"inspect": {
 			name:        "inspect",
-			description: "",
+			description: "Display stats for Pokemon character if it is currently in your Pokedex.",
 			callback:    commandInspect,
 		},
 		"mapf": {
